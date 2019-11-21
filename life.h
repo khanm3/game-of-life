@@ -5,8 +5,8 @@
 
 class Grid {
  public:
-  virtual void add(int x, int y);
-  virtual void add_rle(std::istream &is, int x, int y) final;
+  void add(int x, int y);
+  void add_rle(std::istream &is, int x, int y);
 };
 
 #endif
