@@ -5,11 +5,11 @@
 
 using namespace std;
 
-void Grid::add(int x, int y) {
+void Life::add(int x, int y) {
   cout << "Added (" << x << ", " << y << ")" << endl;
 }
 
-void Grid::add_rle(istream &is, int x, int y) {
+void Life::add_rle(istream &is, int x, int y) {
   // skip comments
   char c;
   string s;
