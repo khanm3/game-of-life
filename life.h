@@ -20,9 +20,6 @@ public:
   //EFFECTS: adds a living cell at (x, y), if there isn't one there already
   void add(int x, int y);
 
-  //EFFECTS: removes the living cell at (x, y), if there is one there
-  void remove(int x, int y);
-
   //EFFECTS: returns true if there's a living cell at (x, y), false otherwise
   bool get(int x, int y) const;
 
