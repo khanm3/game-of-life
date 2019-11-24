@@ -2,6 +2,10 @@ CXX = g++
 
 CXXFLAGS = -Wall -Werror -pedantic --std=c++11 -g
 
+test: Map_tests.exe Set_tests.exe
+	./Map_tests.exe
+	./Set_tests.exe
+
 Set_tests.exe: Set_tests.cpp Set.h
 	$(CXX) $(CXXFLAGS) $< -o $@
 
