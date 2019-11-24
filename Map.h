@@ -44,7 +44,7 @@ public:
     Iterator(Node *node_ptr) : node_ptr(node_ptr) { }
   
   public:
-    std::pair<Key, Val> operator*() {
+    std::pair<Key, Val> operator*() const {
       std::pair<Key, Val> entry(node_ptr->bucket_ptr->key,
                                 node_ptr->bucket_ptr->val);
       return entry;
