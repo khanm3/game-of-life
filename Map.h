@@ -1,5 +1,5 @@
-#ifndef HASH_TABLE_H
-#define HASH_TABLE_H
+#ifndef MAP_H
+#define MAP_H
 
 #include <cassert>
 #include <functional>

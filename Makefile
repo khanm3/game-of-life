@@ -2,7 +2,7 @@ CXX = g++
 
 CXXFLAGS = -Wall -Werror -pedantic --std=c++11 -g
 
-hash_table_tests.exe: hash_table_tests.cpp hash_table.h
+Map_tests.exe: Map_tests.cpp Map.h
 	$(CXX) $(CXXFLAGS) $< -o $@
 
 gosperglidergun: driver.exe gosperglidergun.rle
