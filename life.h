@@ -7,6 +7,8 @@
 class Life {
   //OVERVIEW: object representing the Game of Life
 public:
+  // EFFECTS: creates an empty life object
+  Life();
 
   //EFFECTS: progresses the automaton by one step
   void progress();
