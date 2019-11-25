@@ -214,3 +214,8 @@ void Life::counter_increment_neighbors(Pos pos) {
   counter_increment_cell({x    , y + 1});
   counter_increment_cell({x + 1, y + 1});
 }
+
+std::ostream & operator<<(std::ostream &os, Life &life) {
+  life.print(os);
+  return os;
+}

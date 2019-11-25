@@ -107,4 +107,6 @@ private:
   void counter_increment_neighbors(Pos pos);
 };
 
+std::ostream & operator<<(std::ostream &os, Life &life);
+
 #endif
