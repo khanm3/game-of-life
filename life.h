@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <utility>
+#include "Map.h"
+#include "Set.h"
 
 class Life {
   //OVERVIEW: object representing the Game of Life
@@ -42,6 +44,67 @@ public:
   //MODIFIES: os
   //EFFECTS : prints this object to the given output stream
   void print(std::ostream &os) const;
+
+private:
+  // key type
+  struct Pos {
+    int x;
+    int y;
+
+    bool operator==(Pos other) const {
+      return x == other.x && y == other.y;
+    }
+  };
+
+  // hash functor for Pos
+  struct PosHash {
+    std::size_t operator()(Pos pos) const {
+      return static_cast<std::size_t>(97 * pos.x + 199 * pos.y);
+    }
+  };
+
+  int minx; // x-coordinate of min pos
+
+  int miny; // y-coordinate of min pos
+
+  int maxx; // x-coordinate of max pos
+
+  int maxy; // y-coordinate of max pos
+
+  Set<Pos, PosHash> set1;  // set 1
+
+  Set<Pos, PosHash> set2;  // set 2
+
+  Set<Pos, PosHash> *grid; // the set that this points to contains the
+                           // state of the life object
+
+  Set<Pos, PosHash> *aux;  // the set that this points to is used for auxiliary
+                           // calculations
+
+  Map<Pos, int, PosHash> counter; // keeps track of counts
+
+  //EFFECTS: updates the coordinates of the min and max positions, if the
+  //         given coordinates has values which exceed the current ones
+  void update_minmax(Pos pos);
+
+  //EFFECTS: returns the number of living cells neighboring the the cell
+  //         at the given position
+  int grid_get_num_neighbors(Pos pos) const;
+
+  //REQUIRES: pos points to a living cell
+  //EFFECTS: inserts the cell at the given position into *aux if it has
+  //         exactly three living neighbors
+  void grid_update_cell(Pos pos);
+
+  //EFFECTS: inserts into counter the key-value pair (pos, 1) if pos is not
+  //         already in counter, otherwise increments the integer mapped
+  //         to by pos by one
+  void counter_increment_cell(Pos pos);
+
+  //REQUIRES: pos points to a living cell
+  //EFFECTS: increments the counts of all cells neighboring the cell at the
+  //         given position
+  void counter_increment_neighbors(Pos pos);
 };
 
 #endif
