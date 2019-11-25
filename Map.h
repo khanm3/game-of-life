@@ -118,6 +118,34 @@ private:
     return hasher(key) & (capacity - 1); // capacity is a power of 2
   }
 
+  // EFFECTS: returns a pointer to the bucket containing the given key.
+  //          if the key isn't in the map, then a bucket is filled with the key
+  //          before being returned.
+  Bucket * get(Key key) {
+    // grow table if needed
+    if (static_cast<float>(num_elts) / static_cast<float>(capacity)
+        > LOAD_FACTOR) {
+      resize(capacity * 2);
+    }
+
+    std::size_t i;
+    for (i = hash(key); buckets[i].type; i = (i + 1) % capacity) {
+      if (buckets[i].key == key) {
+        return buckets + i;
+      }
+    }
+
+    // key was not found, insert a new entry
+    if (has_list) {
+      list_push_front(buckets + i);
+    }
+
+    ++num_elts;
+    buckets[i].type = BucketType::FILLED;
+    buckets[i].key = key;
+    return buckets + i;
+  }
+
   // EFFECTS: resizes the buckets array to have the new specified capacity
   void resize(std::size_t new_capacity) {
     // missing assert statement, be extra careful
@@ -170,28 +198,7 @@ public:
   //          if the key isn't in the map, then an entry is created before
   //          returning the corresponding value.
   Val & operator[](Key key) {
-    // grow table if needed
-    if (static_cast<float>(num_elts) / static_cast<float>(capacity)
-        > LOAD_FACTOR) {
-      resize(capacity * 2);
-    }
-
-    std::size_t i;
-    for (i = hash(key); buckets[i].type; i = (i + 1) % capacity) {
-      if (buckets[i].key == key) {
-        return buckets[i].val;
-      }
-    }
-
-    // key was not found, insert a new entry
-    if (has_list) {
-      list_push_front(buckets + i);
-    }
-
-    ++num_elts;
-    buckets[i].type = BucketType::FILLED;
-    buckets[i].key = key;
-    return buckets[i].val;
+    return get(key)->val;
   }
 
   // EFFECTS: removes all key-value pairs from the map
