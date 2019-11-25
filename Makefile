@@ -2,18 +2,19 @@ CXX = g++
 
 CXXFLAGS = -Wall -Werror -pedantic --std=c++11 -g
 
-Life_tests.exe: Life_tests.cpp Life.cpp Life.h
-	$(CXX) $(CXXFLAGS) $^ -o $@
-
-test: Map_tests.exe Set_tests.exe
+test: Map_tests.exe Set_tests.exe Life_tests.exe
 	./Map_tests.exe
 	./Set_tests.exe
+	./Life_tests.exe
+
+Map_tests.exe: Map_tests.cpp Map.h
+	$(CXX) $(CXXFLAGS) $< -o $@
 
 Set_tests.exe: Set_tests.cpp Set.h
 	$(CXX) $(CXXFLAGS) $< -o $@
 
-Map_tests.exe: Map_tests.cpp Map.h
-	$(CXX) $(CXXFLAGS) $< -o $@
+Life_tests.exe: Life_tests.cpp Life.cpp Life.h
+	$(CXX) $(CXXFLAGS) $^ -o $@
 
 gosperglidergun: driver.exe gosperglidergun.rle
 	./driver.exe < gosperglidergun.rle
