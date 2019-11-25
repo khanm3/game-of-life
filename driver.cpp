@@ -1,5 +1,5 @@
 #include <iostream>
-#include "life.h"
+#include "Life.h"
 
 using namespace std;
 
