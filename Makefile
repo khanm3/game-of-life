@@ -16,12 +16,6 @@ Set_tests.exe: Set_tests.cpp Set.h
 Life_tests.exe: Life_tests.cpp Life.cpp Life.h
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
-gosperglidergun: driver.exe gosperglidergun.rle
-	./driver.exe < gosperglidergun.rle
-
-glider: driver.exe glider.rle
-	./driver.exe < glider.rle
-
 driver.exe: driver.cpp Life.cpp
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
