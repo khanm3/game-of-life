@@ -22,7 +22,7 @@ gosperglidergun: driver.exe gosperglidergun.rle
 glider: driver.exe glider.rle
 	./driver.exe < glider.rle
 
-driver.exe: life.cpp driver.cpp
+driver.exe: driver.cpp Life.cpp
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
 
