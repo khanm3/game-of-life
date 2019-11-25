@@ -1,13 +1,9 @@
-#include <iostream>
 #include <string>
 #include <cctype>
 #include "life.h"
 
 using namespace std;
 
-void Life::add(int x, int y) {
-  cout << "Added (" << x << ", " << y << ")" << endl;
-}
 
 void Life::add_rle(istream &is, int x, int y) {
   // skip comments
