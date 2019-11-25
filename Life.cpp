@@ -1,7 +1,7 @@
 #include <string>
 #include <cctype>
 #include <limits>
-#include "life.h"
+#include "Life.h"
 
 using namespace std;
 
