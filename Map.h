@@ -121,7 +121,7 @@ private:
   // EFFECTS: resizes the buckets array to have the new specified capacity
   void resize(std::size_t new_capacity) {
     // missing assert statement, be extra careful
-    Map copy(new_capacity, false);
+    Map copy(new_capacity, true);
 
     for (Node *p = first; p; p = p->next) {
       copy[p->bucket_ptr->key] = p->bucket_ptr->val;
@@ -129,9 +129,13 @@ private:
 
     capacity = new_capacity;
 
-    Bucket *t = buckets;
+    Bucket *t1 = buckets;
     buckets = copy.buckets;
-    copy.buckets = t;
+    copy.buckets = t1;
+
+    Node *t2 = first;
+    first = copy.first;
+    copy.first = t2;
   }
 
 
