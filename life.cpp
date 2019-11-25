@@ -1,11 +1,56 @@
 #include <string>
 #include <cctype>
+#include <limits>
 #include "life.h"
 
 using namespace std;
 
 Life::Life()
   : minx(0), miny(0), maxx(0), maxy(0), grid(&set1), aux(&set2) { }
+
+void Life::progress() {
+  // reset min positions
+  minx = numeric_limits<int>::max();
+  miny = numeric_limits<int>::max();
+  maxx = numeric_limits<int>::min();
+  maxy = numeric_limits<int>::min();
+
+  // for every living cell, update it and increment its neighbors
+  for (auto it = grid->begin(); it != grid->end(); ++it) {
+    Pos pos = *it;
+    grid_update_cell(pos);
+    counter_increment_neighbors(pos);
+  }
+
+  // process entries in counter to find dead cells that become alive
+  for (auto it = counter.begin(); it != counter.end(); ++it) {
+    pair<Pos, int> entry = *it;
+    if (entry.second == 3 && !aux->contains(entry.first)) {
+      aux->insert(entry.first);
+      update_minmax(entry.first);
+    }
+  }
+
+  // if there are no entries in the new state set, then min positions should
+  // be re-reset accordingly
+  if (aux->size() == 0) {
+    minx = miny = maxx = maxy = 0;
+  }
+
+  // switch grid and aux pointers
+  if (grid == &set1) {
+    grid = &set2;
+    aux = &set1;
+  }
+  else {
+    grid = &set1;
+    aux = &set2;
+  }
+
+  // clear aux and counter
+  aux->clear();
+  counter.clear();
+}
 
 void Life::add_rle(istream &is, int x, int y) {
   // skip comments
@@ -128,4 +173,51 @@ void Life::update_minmax(Pos pos) {
   if (y > maxy) {
     maxy = y;
   }
+}
+
+int Life::grid_get_num_neighbors(Pos pos) const {
+  int x = pos.x, y = pos.y;
+  int count = 0;
+
+  if (grid->contains({x - 1, y})) ++count;
+  if (grid->contains({x + 1, y})) ++count;
+  if (grid->contains({x - 1, y - 1})) ++count;
+  if (grid->contains({x    , y - 1})) ++count;
+  if (grid->contains({x + 1, y - 1})) ++count;
+  if (grid->contains({x - 1, y + 1})) ++count;
+  if (grid->contains({x    , y + 1})) ++count;
+  if (grid->contains({x + 1, y + 1})) ++count;
+
+  return count;
+}
+
+void Life::grid_update_cell(Pos pos) {
+  int count = grid_get_num_neighbors(pos);
+
+  if (count == 2 || count == 3) {
+    aux->insert(pos);
+    update_minmax(pos);
+  }
+}
+
+void Life::counter_increment_cell(Pos pos) {
+  if (!counter.contains(pos)) {
+    counter[pos] = 1;
+  }
+  else {
+    ++counter[pos];
+  }
+}
+
+void Life::counter_increment_neighbors(Pos pos) {
+  int x = pos.x, y = pos.y;
+
+  counter_increment_cell({x - 1, y});
+  counter_increment_cell({x + 1, y});
+  counter_increment_cell({x - 1, y - 1});
+  counter_increment_cell({x    , y - 1});
+  counter_increment_cell({x + 1, y - 1});
+  counter_increment_cell({x - 1, y + 1});
+  counter_increment_cell({x    , y + 1});
+  counter_increment_cell({x + 1, y + 1});
 }
