@@ -65,20 +65,15 @@ void Life::add_rle(istream &is, int x, int y) {
 
   // get integer up to ","
   getline(is, s, ',');
-  int width = stoi(s);
 
   // skip "y ="
   is >> s >> s;
 
   // get integer up to ","
   getline(is, s, ',');
-  int height = stoi(s);
 
   // skip "rule = B3/S23"
   is >> s >> s >> s;
-
-  // DEBUG: print values of x and y
-  cout << "x = " << width << ", y = " << height << endl;
 
   // parse rle
   int x0 = x, count = 1;
@@ -117,8 +112,6 @@ void Life::add_rle(istream &is, int x, int y) {
 }
 
 void Life::add(int x, int y) {
-  cout << "Added (" << x << ", " << y << ")" << endl;
-
   grid->insert({x, y});
   update_minmax({x, y});
 }
