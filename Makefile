@@ -2,6 +2,9 @@ CXX = g++
 
 CXXFLAGS = -Wall -Werror -pedantic --std=c++11 -g
 
+life_tests.exe: life_tests.cpp life.cpp life.h
+	$(CXX) $(CXXFLAGS) $^ -o $@
+
 test: Map_tests.exe Set_tests.exe
 	./Map_tests.exe
 	./Set_tests.exe
