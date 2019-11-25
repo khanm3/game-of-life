@@ -166,17 +166,17 @@ public:
   //          if the key isn't in the map, then an entry is created before
   //          returning the corresponding value.
   Val & operator[](Key key) {
+    // grow table if needed
+    if (static_cast<float>(num_elts) / static_cast<float>(capacity)
+        > LOAD_FACTOR) {
+      resize(capacity * 2);
+    }
+
     std::size_t i;
     for (i = hash(key); buckets[i].type; i = (i + 1) % capacity) {
       if (buckets[i].key == key) {
         return buckets[i].val;
       }
-    }
-
-    // grow table if needed
-    if (static_cast<float>(num_elts) / static_cast<float>(capacity)
-        > LOAD_FACTOR) {
-      resize(capacity * 2);
     }
 
     // key was not found, insert a new entry
