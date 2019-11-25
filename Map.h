@@ -8,15 +8,9 @@
 template <typename Key, typename Val, typename Hash=std::hash<Key>>
 class Map {
 private:
-  // bucket type: empty or filled
-  enum BucketType {
-    EMPTY,
-    FILLED
-  };
-
   // bucket holds key-value pairs, along with bucket type
   struct Bucket {
-    BucketType type = BucketType::EMPTY;
+    bool filled = false;
     Key key;
     Val val;
   };
@@ -129,7 +123,7 @@ private:
     }
 
     std::size_t i;
-    for (i = hash(key); buckets[i].type; i = (i + 1) % capacity) {
+    for (i = hash(key); buckets[i].filled; i = (i + 1) % capacity) {
       if (buckets[i].key == key) {
         return buckets + i;
       }
@@ -141,7 +135,7 @@ private:
     }
 
     ++num_elts;
-    buckets[i].type = BucketType::FILLED;
+    buckets[i].filled = true;
     buckets[i].key = key;
     return buckets + i;
   }
@@ -183,7 +177,7 @@ public:
 
   // EFFECTS: returns true if the given key is contained in the map
   bool contains(Key key) const {
-    for (std::size_t i = hash(key); buckets[i].type; i = (i + 1) % capacity) {
+    for (std::size_t i = hash(key); buckets[i].filled; i = (i + 1) % capacity) {
       if (buckets[i].key == key) {
         return true;
       }
@@ -203,7 +197,7 @@ public:
   // NOTE: capacity is not changed by clearing
   void clear() {
     while (first) {
-      first->bucket_ptr->type = BucketType::EMPTY;
+      first->bucket_ptr->filled = false;
       list_pop_front();
     }
 
