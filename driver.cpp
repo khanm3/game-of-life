@@ -31,7 +31,7 @@ int num_generations(string &input) {
 
 int main(int argc, char **argv) {
   if (argc != 2) {
-    cout << "Usage: ./interactive.exe FILE" << endl;
+    cout << "Usage: ./driver.exe FILE" << endl;
     return 1;
   }
 
