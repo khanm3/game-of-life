@@ -56,4 +56,26 @@ TEST(test_life_glider_print_ten_generations) {
     }
 }
 
+TEST(test_life_size) {
+    istringstream is(
+        "#N Glider\n"
+        "#O Richard K. Guy\n"
+        "#C The smallest, most common, and first discovered spaceship. "
+        "Diagonal, has period 4 and speed c/4.\n"
+        "#C www.conwaylife.com/wiki/index.php?title=Glider\n"
+        "x = 3, y = 3, rule = B3/S23\n"
+        "bob$2bo$3o!\n"
+    );
+
+    Life life;
+    life.add_rle(is, 0, 0);
+    ASSERT_EQUAL(life.size(), 5);
+
+    for (int i = 0; i < 100; ++i) {
+        life.progress();
+    }
+
+    ASSERT_EQUAL(life.size(), 5);
+}
+
 TEST_MAIN()
