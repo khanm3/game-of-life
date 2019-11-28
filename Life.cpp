@@ -136,6 +136,10 @@ int Life::height() const {
   return maxy - miny + 1;
 }
 
+size_t Life::size() const {
+  return grid->size();
+}
+
 void Life::print(ostream &os) const {
   for (int y = miny; y <= maxy; ++y) {
     for (int x = minx; x <= maxx; ++x) {

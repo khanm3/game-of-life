@@ -41,6 +41,9 @@ public:
   //EFFECTS: returns the height of the grid (max_y - max_y)
   int height() const;
 
+  // EFFECTS: returns the number of living cells in the grid
+  std::size_t size() const;
+
   //MODIFIES: os
   //EFFECTS : prints this object to the given output stream
   void print(std::ostream &os) const;
