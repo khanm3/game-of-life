@@ -5,6 +5,9 @@ CXXFLAGS = -Wall -Werror -pedantic --std=c++11 -g
 driver.exe: driver.cpp Life.cpp
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
+timer.exe: timer.cpp Life.cpp
+	$(CXX) $(CXXFLAGS) $^ -o $@
+
 test: Map_tests.exe Set_tests.exe Life_tests.exe
 	./Map_tests.exe
 	./Set_tests.exe
