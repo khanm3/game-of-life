@@ -61,9 +61,7 @@ private:
 
   // hash functor for Pos
   struct PosHash {
-    std::size_t operator()(Pos pos) const {
-      return static_cast<std::size_t>(97 * pos.x + 199 * pos.y);
-    }
+    std::size_t operator()(Pos pos) const;
   };
 
   int minx; // x-coordinate of min pos

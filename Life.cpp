@@ -5,6 +5,10 @@
 
 using namespace std;
 
+size_t Life::PosHash::operator()(Life::Pos pos) const  {
+  return static_cast<size_t>(97 * pos.x + 199 * pos.y);
+}
+
 Life::Life()
   : minx(0), miny(0), maxx(0), maxy(0), grid(&set1), aux(&set2) { }
 
