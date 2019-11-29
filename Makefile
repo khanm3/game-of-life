@@ -2,6 +2,9 @@ CXX = g++
 
 CXXFLAGS = -Wall -Werror -pedantic --std=c++11 -g
 
+driver.exe: driver.cpp Life.cpp
+	$(CXX) $(CXXFLAGS) $^ -o $@
+
 test: Map_tests.exe Set_tests.exe Life_tests.exe
 	./Map_tests.exe
 	./Set_tests.exe
@@ -15,10 +18,6 @@ Set_tests.exe: Set_tests.cpp Set.h
 
 Life_tests.exe: Life_tests.cpp Life.cpp
 	$(CXX) $(CXXFLAGS) $^ -o $@
-
-driver.exe: driver.cpp Life.cpp
-	$(CXX) $(CXXFLAGS) $^ -o $@
-
 
 .PHONY: clean
 clean:
