@@ -13,7 +13,7 @@ Map_tests.exe: Map_tests.cpp Map.h
 Set_tests.exe: Set_tests.cpp Set.h
 	$(CXX) $(CXXFLAGS) $< -o $@
 
-Life_tests.exe: Life_tests.cpp Life.cpp Life.h
+Life_tests.exe: Life_tests.cpp Life.cpp
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
 driver.exe: driver.cpp Life.cpp
