@@ -2,6 +2,8 @@ CXX = g++
 
 CXXFLAGS = -Wall -Werror -pedantic --std=c++11 -g
 
+all: driver.exe timer.exe
+
 driver.exe: driver.cpp Life.cpp
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
