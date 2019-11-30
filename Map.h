@@ -122,23 +122,28 @@ private:
       resize(capacity * 2);
     }
 
-    std::size_t i;
-    for (i = hash(key); buckets[i].filled; i = (i + 1) % capacity) {
-      if (buckets[i].key == key) {
-        return buckets + i;
+    std::size_t i = hash(key);
+    Bucket *p = buckets + i;
+
+    while (p->filled) {
+      if (p->key == key) {
+        return p;
       }
+
+      ++i;
+      p = (i == capacity) ? buckets : p + 1;
     }
 
     // key was not found, insert a new entry
     if (has_list) {
-      list_push_front(buckets + i);
+      list_push_front(p);
     }
 
     ++num_elts;
-    buckets[i].filled = true;
-    buckets[i].key = key;
-    buckets[i].val = Val();
-    return buckets + i;
+    p->filled = true;
+    p->key = key;
+    p->val = Val();
+    return p;
   }
 
   // EFFECTS: resizes the buckets array to have the new specified capacity
@@ -178,10 +183,16 @@ public:
 
   // EFFECTS: returns true if the given key is contained in the map
   bool contains(Key key) const {
-    for (std::size_t i = hash(key); buckets[i].filled; i = (i + 1) % capacity) {
-      if (buckets[i].key == key) {
+    std::size_t i = hash(key);
+    Bucket *p = buckets + i;
+
+    while (p->filled) {
+      if (p->key == key) {
         return true;
       }
+
+      ++i;
+      p = (i == capacity) ? buckets : p + 1;
     }
 
     return false;
