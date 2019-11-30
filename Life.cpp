@@ -202,12 +202,7 @@ void Life::grid_update_cell(Pos pos) {
 }
 
 void Life::counter_increment_cell(Pos pos) {
-  if (!counter.contains(pos)) {
-    counter[pos] = 1;
-  }
-  else {
-    ++counter[pos];
-  }
+  ++counter[pos];
 }
 
 void Life::counter_increment_neighbors(Pos pos) {
