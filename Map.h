@@ -4,6 +4,7 @@
 #include <cassert>
 #include <functional>
 #include <utility>
+#include <vector>
 
 template <typename Key, typename Val, typename Hash=std::hash<Key>>
 class Map {
@@ -14,13 +15,6 @@ private:
     Key key;
     Val val;
   };
-
-  // linked list node holds pointer to a bucket
-  struct Node {
-    Bucket *bucket_ptr;
-    Node *next;
-  };
-
 
 public:
   // iterator over map elements
@@ -33,28 +27,29 @@ public:
   private:
     friend class Map; // let Map access private members
 
-    Node *node_ptr;   // holds a Node *
+    typename std::vector<Bucket *>::const_iterator it;
 
-    Iterator(Node *node_ptr) : node_ptr(node_ptr) { }
+    Iterator(typename std::vector<Bucket *>::const_iterator it)
+      : it(it) { }
   
   public:
     std::pair<Key, Val> operator*() const {
-      std::pair<Key, Val> entry(node_ptr->bucket_ptr->key,
-                                node_ptr->bucket_ptr->val);
+      std::pair<Key, Val> entry((*it)->key,
+                                (*it)->val);
       return entry;
     }
 
     Iterator & operator++() {
-      node_ptr = node_ptr->next;
+      ++it;
       return *this;
     }
 
     bool operator==(Iterator other) const {
-      return node_ptr == other.node_ptr;
+      return it == other.it;
     }
 
     bool operator!=(Iterator other) const {
-      return node_ptr != other.node_ptr;
+      return it != other.it;
     }
   };
 
@@ -74,36 +69,14 @@ private:
   bool has_list;        // if true, this hash table keeps track of all filled
                         // buckets in a linked list, and does not otherwise
 
-  Node *first;          // linked list of filled buckets
-
-
-  // REQUIRES: bucket_ptr is a pointer to a valid bucket
-  // EFFECTS: pushes bucket_ptr to the front of the linked list
-  void list_push_front(Bucket *bucket_ptr) {
-    first = new Node{ bucket_ptr, first };
-  }
-
-  // REQUIRES: first points to a valid node
-  // EFFECTS: pops the first element from the linked list
-  void list_pop_front() {
-    // missing assert statement, be extra careful
-    Node *victim = first;
-    first = first->next;
-    delete victim;
-  }
-
-  // EFFECTS: clears the linked list
-  void list_clear() {
-    while (first) {
-      list_pop_front();
-    }
-  }
+  std::vector<Bucket *> list; // vector containing pointers to all filled
+                              // buckets
 
   // REQUIRES: capacity > 0
   // EFFECTS: creates a Map with specified capacity
   Map(std::size_t capacity, bool has_list)
     : num_elts(0), capacity(capacity), buckets(new Bucket[capacity]),
-      has_list(has_list), first(nullptr) { 
+      has_list(has_list) { 
     assert(capacity > 0);
   }
 
@@ -136,7 +109,7 @@ private:
 
     // key was not found, insert a new entry
     if (has_list) {
-      list_push_front(p);
+      list.push_back(p);
     }
 
     ++num_elts;
@@ -151,10 +124,10 @@ private:
     // missing assert statement, be extra careful
     Map copy(new_capacity, false);
 
-    for (Node *p = first; p; p = p->next) {
-      Bucket *b = copy.get(p->bucket_ptr->key);
-      b->val = p->bucket_ptr->val;
-      p->bucket_ptr = b;
+    for (std::size_t i = 0; i < list.size(); ++i) {
+      Bucket *b = copy.get(list[i]->key);
+      b->val = list[i]->val;
+      list[i] = b;
     }
 
     capacity = new_capacity;
@@ -173,7 +146,6 @@ public:
   // EFFECTS: destructs map
   ~Map() {
     delete[] buckets;
-    list_clear();
   }
 
   // EFFECTS: returns the number of key-value pairs
@@ -209,22 +181,22 @@ public:
   // EFFECTS: removes all key-value pairs from the map
   // NOTE: capacity is not changed by clearing
   void clear() {
-    while (first) {
-      first->bucket_ptr->filled = false;
-      list_pop_front();
+    for (auto it = list.begin(); it != list.end(); ++it) {
+      (*it)->filled = false;
     }
+    list.clear();
 
     num_elts = 0;
   }
 
   // EFFECTS: returns an iterator pointing to the first entry in the map
   Iterator begin() const {
-    return Iterator(first);
+    return Iterator(list.begin());
   }
 
   // EFFECTS: returns an iterator pointing off the end of the map
   Iterator end() const {
-    return Iterator(nullptr);
+    return Iterator(list.end());
   }
 };
 
