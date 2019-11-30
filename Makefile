@@ -1,6 +1,6 @@
 CXX = g++
 
-CXXFLAGS = -Wall -Werror -pedantic --std=c++11 -g
+CXXFLAGS = -Wall -Werror -pedantic --std=c++11 -g -O3
 
 all: driver.exe timer.exe
 
