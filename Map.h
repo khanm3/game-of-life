@@ -114,7 +114,7 @@ private:
 
   // EFFECTS: returns a pointer to the bucket containing the given key.
   //          if the key isn't in the map, then a bucket is filled with the key
-  //          before being returned.
+  //          and a default initialized value before being returned.
   Bucket * get(Key key) {
     // grow table if needed
     if (static_cast<float>(num_elts) / static_cast<float>(capacity)
@@ -137,6 +137,7 @@ private:
     ++num_elts;
     buckets[i].filled = true;
     buckets[i].key = key;
+    buckets[i].val = Val();
     return buckets + i;
   }
 
@@ -187,8 +188,9 @@ public:
   }
 
   // EFFECTS: returns a reference to the value corresponding to the given key.
-  //          if the key isn't in the map, then an entry is created before
-  //          returning the corresponding value.
+  //          if the key isn't in the map, then an entry containing the given
+  //          key and a default initialized value is created before the value
+  //          is returned.
   Val & operator[](Key key) {
     return get(key)->val;
   }
