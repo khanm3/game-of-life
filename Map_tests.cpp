@@ -38,7 +38,6 @@ TEST(test_map_clear) {
     map[0] = 100;
     map.clear();
     ASSERT_EQUAL(map.size(), 0);
-    ASSERT_EQUAL(map[0], 100); // tests private interface
 }
 
 TEST(test_map_grow) {
