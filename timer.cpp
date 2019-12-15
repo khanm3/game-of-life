@@ -8,7 +8,7 @@
 using namespace std;
 
 void usage() {
-  cout << "Usage: timer.exe PATTERN_FILENAME NUM_ITERATIONS [--print-info]"
+  cout << "Usage: timer.exe PATTERN_FILENAME NUM_ITERATIONS [--stats]"
        << endl;
 }
 
@@ -27,7 +27,7 @@ int main(int argc, char **argv) {
 
   bool print_info_flag = false;
   if (argc == 4) {
-    if (strcmp(argv[3], "--print-info") == 0) {
+    if (strcmp(argv[3], "--stats") == 0) {
       print_info_flag = true;
     }
     else {
