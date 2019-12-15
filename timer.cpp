@@ -7,6 +7,11 @@
 
 using namespace std;
 
+void usage() {
+  cout << "Usage: timer.exe PATTERN_FILENAME NUM_ITERATIONS [--print-info]"
+       << endl;
+}
+
 void print_info(Life &life) {
   cout << "size\t" << life.size() << endl;
   cout << "dims\t" << life.width() << "x" << life.height() << endl;
@@ -16,8 +21,7 @@ void print_info(Life &life) {
 int main(int argc, char **argv) {
   // parse arguments
   if (argc < 3 || argc > 4) {
-    cout << "Usage: timer.exe PATTERN_FILENAME NUM_ITERATIONS [--print-info]"
-         << endl;
+    usage();
     return 1;
   }
 
@@ -27,8 +31,7 @@ int main(int argc, char **argv) {
       print_info_flag = true;
     }
     else {
-      cout << "Usage: timer.exe PATTERN_FILENAME NUM_ITERATIONS [--print-info]"
-           << endl;
+      usage();
       return 4;
     }
   }
