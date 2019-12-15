@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <chrono>
-#include <cstdlib>
+#include <string>
 #include <cstring>
 #include "Life.h"
 
@@ -36,9 +36,18 @@ int main(int argc, char **argv) {
     }
   }
 
-  int iter = atoi(argv[2]);
+  int iter;
 
-  if (iter == 0) {
+  try {
+    iter = stoi(argv[2]);
+  }
+  catch (invalid_argument &e) {
+    cout << "Error: converting " << argv[2] << " to an int: "
+         << e.what() << endl;
+    return 5;
+  }
+
+  if (iter < 1) {
     cout << "Error: number of iterations must be a positive integer" << endl;
     return 2;
   }
