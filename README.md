@@ -2,7 +2,7 @@
 
 ![Example][0]
 
-A command line simultion program for [Conway's Game of Life][1] with virtually
+A command line simulation program for [Conway's Game of Life][1] with virtually
 no restriction on cell growth.
 
 ## Table of Contents
