@@ -3,6 +3,7 @@
 #include <chrono>
 #include <string>
 #include <cstring>
+#include <utility>
 #include "Life.h"
 
 using namespace std;
@@ -13,8 +14,13 @@ void usage() {
 }
 
 void print_info(Life &life) {
+  auto min_pos = life.min_pos();
+  auto max_pos = life.max_pos();
   cout << "size\t" << life.size() << endl;
   cout << "dims\t" << life.width() << "x" << life.height() << endl;
+  cout << "span\t"
+       << "(" << min_pos.first << "," << min_pos.second << ")" << " to "
+       << "(" << max_pos.first << "," << max_pos.second << ")" << endl;
   cout << endl;
 }
 
