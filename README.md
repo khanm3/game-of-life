@@ -161,7 +161,7 @@ use it with one of the programs! One thing to look out for though, if you're
 searching for a pattern to use with the driver program, make sure the dimensions
 the pattern are small enough to see in you terminal.
 
-[0]: https://i.imgur.com/tyxv8WX.gif
+[0]: https://i.imgur.com/01FLXHe.gif
 [1]: https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
 [2]: https://www.conwaylife.com/wiki/Run_Length_Encoded
 [3]: https://www.conwaylife.com/wiki/Main_Page
