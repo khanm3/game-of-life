@@ -32,7 +32,7 @@ int main(int argc, char **argv) {
     }
     else {
       usage();
-      return 4;
+      return 1;
     }
   }
 
@@ -44,18 +44,18 @@ int main(int argc, char **argv) {
   catch (invalid_argument &e) {
     cout << "Error: converting " << argv[2] << " to an int: "
          << e.what() << endl;
-    return 5;
+    return 1;
   }
 
   if (iter < 1) {
     cout << "Error: number of iterations must be a positive integer" << endl;
-    return 2;
+    return 1;
   }
 
   ifstream fin(argv[1]);
   if (!fin.is_open()) {
     cout << "Error: could not open " << argv[1] << endl;
-    return 3;
+    return 1;
   }
 
   // conduct test
