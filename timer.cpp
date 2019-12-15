@@ -2,6 +2,7 @@
 #include <fstream>
 #include <chrono>
 #include <cstdlib>
+#include <cstring>
 #include "Life.h"
 
 using namespace std;
@@ -14,9 +15,22 @@ void print_info(Life &life) {
 
 int main(int argc, char **argv) {
   // parse arguments
-  if (argc != 3) {
-    cout << "Usage: timer.exe PATTERN_FILENAME NUM_ITERATIONS" << endl;
+  if (argc < 3 || argc > 4) {
+    cout << "Usage: timer.exe PATTERN_FILENAME NUM_ITERATIONS [--print-info]"
+         << endl;
     return 1;
+  }
+
+  bool print_info_flag = false;
+  if (argc == 4) {
+    if (strcmp(argv[3], "--print-info") == 0) {
+      print_info_flag = true;
+    }
+    else {
+      cout << "Usage: timer.exe PATTERN_FILENAME NUM_ITERATIONS [--print-info]"
+           << endl;
+      return 4;
+    }
   }
 
   int iter = atoi(argv[2]);
@@ -35,7 +49,10 @@ int main(int argc, char **argv) {
   // conduct test
   Life life;
   life.add_rle(fin, 0, 0);
-  print_info(life);
+
+  if (print_info_flag) {
+    print_info(life);
+  }
 
   auto t1 = chrono::high_resolution_clock::now();
 
@@ -45,6 +62,10 @@ int main(int argc, char **argv) {
 
   auto t2 = chrono::high_resolution_clock::now();
   auto time = chrono::duration_cast<chrono::milliseconds>(t2 - t1).count();
-  print_info(life);
+
+  if (print_info_flag) {
+    print_info(life);
+  }
+
   cout << "time\t" << time << "ms" << endl;
 }
