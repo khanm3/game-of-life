@@ -73,11 +73,18 @@ int main(int argc, char **argv) {
   }
 
   auto t2 = chrono::high_resolution_clock::now();
-  auto time = chrono::duration_cast<chrono::milliseconds>(t2 - t1).count();
+  auto diff = chrono::duration_cast<chrono::milliseconds>(t2 - t1).count();
+  auto m = diff / 60000;
+  auto s = (diff % 60000) / 1000;
+  auto ms = diff % 1000;
 
   if (print_info_flag) {
     print_info(life);
   }
 
-  cout << "time\t" << time << "ms" << endl;
+  cout << "time\t" << m << "m" << s << ".";
+  cout.fill('0');
+  cout.width(3);
+  cout << ms << "s" << endl;
+  
 }
