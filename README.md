@@ -74,8 +74,9 @@ cells in the grid, format: min_pos to max_pos
 
 ### Examples
 
-Let's try using driver.exe on glider.rle. The outupt, with extra newlines
-removed, is shown below.
+As an example, we run the driver program on glider.rle. We input four
+consecutive new lines to increment the generation by one, four times. The
+output, with the extra new lines removed, is shown below.
 
 ```
 [mokhan@aspire life]$ ./driver.exe glider.rle
@@ -105,25 +106,46 @@ Generation 4
 OOO
 ```
 
-Okay, so this pattern seems to oscillate back to its original configuration.
-What's going on? To see, we run timer.exe with its optional argument.
+It seems that this pattern oscillates between four states. To confirm our
+suspicions, we run the program again, this time incrementing the generation by
+a multiple of four, say, 400.
 
 ```
-[mokhan@aspire life]$ ./timer.exe glider.rle 100 --stats
+[mokhan@aspire life]$ ./driver.exe glider.rle 
+Generation 0
+.O.
+..O
+OOO
+
+400
+
+Generation 400
+.O.
+..O
+OOO
+```
+
+Sure enough, we're at the same configuration! So what's going on? Is this
+pattern remaining in the same place? To confirm this, we'll (weirdly) run the
+timer program with its optional argument --stats.
+
+```
+[mokhan@aspire life]$ ./timer.exe glider.rle  400 --stats
 size    5
 dims    3 by 3
 span    (0,0) to (2,2)
 
 size    5
 dims    3 by 3
-span    (25,25) to (27,27)
+span    (100,100) to (102,102)
 
 time    0m0.000s
 ```
 
-From the initial and final spans, it's now apparent that our pattern seems to
-be moving across the grid! Seems like the output of the driver program doesn't
-do the "motion" of our pattern justice.
+Now we can see that the top left corner of the glider started at position (0,0)
+in Generation 0, and ended at position (100,100) in Generation 400. It seems
+that the pattern *moved* across our internal grid data structure. Now the
+name "glider" makes sense!
 
 ## Tips and Tricks <a name = "tips-and-tricks"></a>
 
