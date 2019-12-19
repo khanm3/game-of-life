@@ -152,6 +152,13 @@ name "glider" makes sense!
 
 Here are some tips and tricks for this project.
 
+### Watch an "Animation" with Driver
+
+You can create something similar to an animation with the driver program by
+simply holding the enter or return key. Of course, all this does is increment
+the generation by one repeatedly, but the results are nice to look at (see the
+example GIF at the top).
+
 ### Provided Pattern Files
 
 From the repository, you might have noticed that there are several pattern
