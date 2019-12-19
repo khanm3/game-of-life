@@ -182,7 +182,7 @@ All the pattern files included were taken from [LifeWiki][3]. If you want, you
 can browse for more patterns on this website, download the RLE pattern file, and
 use it with one of the programs! One thing to look out for though, if you're
 searching for a pattern to use with the driver program, make sure the dimensions
-the pattern are small enough to see in you terminal.
+the pattern are small enough to see in your terminal.
 
 [0]: https://i.imgur.com/01FLXHe.gif
 [1]: https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
