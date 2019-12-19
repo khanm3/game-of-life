@@ -20,11 +20,12 @@ no restriction on cell growth.
 
 ## Usage <a name = "usage"></a>
 
-Building this project provides two separate programs, driver.exe and timer.exe.
+Building this project provides two programs, an interactive console program,
+which we call the driver program (driver.exe), and a timer program (timer.exe).
 
 ### Driver
 
-The driver program is the one shown in the example GIF at the top. Its usage is
+The driver program is shown in the example GIF at the top. Its usage is
 as follows:
 
 ```
@@ -142,9 +143,9 @@ span    (100,100) to (102,102)
 time    0m0.000s
 ```
 
-Now we can see that the top left corner of the glider started at position (0,0)
-in Generation 0, and ended at position (100,100) in Generation 400. It seems
-that the pattern *moved* across our internal grid data structure. Now the
+We now see that the top left corner of the glider started at position (0, 0)
+in Generation 0, and ended at position (100, 100) in Generation 400. It seems
+that the pattern *moved* across the internal grid data structure. Now the
 name "glider" makes sense!
 
 ## Tips and Tricks <a name = "tips-and-tricks"></a>
